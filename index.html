@@ -1,186 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Number System Converter</title>
-
+    <meta name="description" content="A simple responsive calculator and number system converter for Decimal, Binary, Octal and Hexadecimal.">
+    <title>Number Tools — Calculator & Number System Converter</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="style.css">
-
 </head>
-
 <body>
-
-    <nav>
-
-        <div class="logo">
-            Number System <span>Converter</span>
-        </div>
-
+    <nav aria-label="Primary navigation">
+        <a class="logo" href="#home" aria-label="Number Tools home">Number <span>Tools</span></a>
         <ul id="navLinks">
-
-            <li>Home</li>
-
-            <li>Converter</li>
-
-            <li>Features</li>
-
-            <li>About</li>
-
+            <li><a href="#home">Home</a></li>
+            <li><a href="#converter">Converter</a></li>
+            <li><a href="#calculator">Calculator</a></li>
+            <li><a href="#features">Features</a></li>
         </ul>
-
-        <button class="nav-btn">
-            Convert
-        </button>
-
+        <a class="nav-btn" href="#converter">Get Started</a>
     </nav>
 
-    <section class="hero">
+    <main>
+        <section class="hero" id="home">
+            <p class="eyebrow">Simple • Fast • Responsive</p>
+            <h1>Number <span>Tools</span></h1>
+            <h2>Convert and calculate in one place.</h2>
+            <p>Convert between Decimal, Binary, Octal and Hexadecimal, or use the built-in calculator for everyday arithmetic.</p>
+            <div class="hero-actions">
+                <a class="primary-btn" href="#converter">Start Converting</a>
+                <a class="secondary-btn" href="#calculator">Open Calculator</a>
+            </div>
+        </section>
 
-        <h1>
-            Number System <span>Converter</span>
-        </h1>
+        <section class="features" id="features" aria-label="Features">
+            <article class="card">
+                <div class="icon">🔢</div>
+                <h3>Multi Base</h3>
+                <p>Convert between Decimal, Binary, Octal and Hexadecimal with clear input validation.</p>
+            </article>
+            <article class="card">
+                <div class="icon">🧮</div>
+                <h3>Calculator</h3>
+                <p>Perform addition, subtraction, multiplication, division and percentage calculations.</p>
+            </article>
+            <article class="card">
+                <div class="icon">📋</div>
+                <h3>Copy Results</h3>
+                <p>Copy conversion or calculator results to your clipboard with a single tap.</p>
+            </article>
+        </section>
 
-        <h2>
-            Convert Between Number Systems
-        </h2>
+        <section class="tool-section" id="converter">
+            <div class="tool-card">
+                <div class="section-heading">
+                    <p class="eyebrow">Tool 01</p>
+                    <h2>Number System Converter</h2>
+                    <p>Convert whole numbers between the four common number systems.</p>
+                </div>
 
-        <p>
-            Convert Decimal, Binary, Octal and Hexadecimal instantly using a simple and responsive web application.
-        </p>
+                <label for="numberInput">Value</label>
+                <input type="text" id="numberInput" placeholder="e.g. 255 or FF" autocomplete="off" spellcheck="false">
 
-        <button onclick="document.querySelector('.converter').scrollIntoView({behavior:'smooth'})">
-            Start Converting
-        </button>
+                <div class="two-column">
+                    <div>
+                        <label for="fromBase">Convert From</label>
+                        <select id="fromBase">
+                            <option value="10">Decimal</option>
+                            <option value="2">Binary</option>
+                            <option value="8">Octal</option>
+                            <option value="16">Hexadecimal</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="toBase">Convert To</label>
+                        <select id="toBase">
+                            <option value="2">Binary</option>
+                            <option value="10">Decimal</option>
+                            <option value="8">Octal</option>
+                            <option value="16">Hexadecimal</option>
+                        </select>
+                    </div>
+                </div>
 
-    </section>
+                <div class="button-group">
+                    <button class="secondary-action" id="swapBtn" type="button">⇄ Swap</button>
+                    <button class="primary-action" id="convertBtn" type="button">Convert</button>
+                    <button class="danger-action" id="clearConverterBtn" type="button">Clear</button>
+                </div>
 
-    <section class="features">
+                <div class="result-box" aria-live="polite">
+                    <div>
+                        <p class="result-label">Result</p>
+                        <h3 id="result">Your converted value will appear here</h3>
+                    </div>
+                    <button class="copy-btn" id="copyConverterBtn" type="button" hidden>Copy</button>
+                </div>
+                <p class="status-message" id="converterStatus" role="status"></p>
+            </div>
+        </section>
 
-        <div class="card">
+        <section class="tool-section" id="calculator">
+            <div class="tool-card calculator-card">
+                <div class="section-heading">
+                    <p class="eyebrow">Tool 02</p>
+                    <h2>Calculator</h2>
+                    <p>Basic arithmetic with keyboard-friendly controls and a clean display.</p>
+                </div>
 
-            <div class="icon">🔢</div>
+                <div class="calculator">
+                    <div class="calculator-display" aria-live="polite">
+                        <div class="calculator-expression" id="calculatorExpression"></div>
+                        <div class="calculator-value" id="calculatorValue">0</div>
+                    </div>
 
-            <h3>Multi Base</h3>
+                    <div class="calculator-grid">
+                        <button class="calc-key utility" data-action="clear" type="button">AC</button>
+                        <button class="calc-key utility" data-action="backspace" type="button">⌫</button>
+                        <button class="calc-key utility" data-action="percent" type="button">%</button>
+                        <button class="calc-key operator" data-operator="÷" type="button">÷</button>
 
-            <p>
-                Convert between Decimal, Binary, Octal and Hexadecimal with ease.
-            </p>
+                        <button class="calc-key" data-number="7" type="button">7</button>
+                        <button class="calc-key" data-number="8" type="button">8</button>
+                        <button class="calc-key" data-number="9" type="button">9</button>
+                        <button class="calc-key operator" data-operator="×" type="button">×</button>
 
-        </div>
+                        <button class="calc-key" data-number="4" type="button">4</button>
+                        <button class="calc-key" data-number="5" type="button">5</button>
+                        <button class="calc-key" data-number="6" type="button">6</button>
+                        <button class="calc-key operator" data-operator="−" type="button">−</button>
 
-        <div class="card">
+                        <button class="calc-key" data-number="1" type="button">1</button>
+                        <button class="calc-key" data-number="2" type="button">2</button>
+                        <button class="calc-key" data-number="3" type="button">3</button>
+                        <button class="calc-key operator" data-operator="+" type="button">+</button>
 
-            <div class="icon">⚡</div>
+                        <button class="calc-key zero" data-number="0" type="button">0</button>
+                        <button class="calc-key" data-action="decimal" type="button">.</button>
+                        <button class="calc-key equals" data-action="equals" type="button">=</button>
+                    </div>
 
-            <h3>Fast Conversion</h3>
+                    <button class="calculator-copy" id="copyCalculatorBtn" type="button">Copy Result</button>
+                    <p class="status-message" id="calculatorStatus" role="status"></p>
+                </div>
+            </div>
+        </section>
 
-            <p>
-                Get accurate results instantly with a single click.
-            </p>
+        <section class="about-section" id="about">
+            <div class="about-card">
+                <p class="eyebrow">About</p>
+                <h2>Small tools, built to be useful.</h2>
+                <p>Built with plain HTML, CSS and JavaScript. No frameworks, no build step, and no backend required.</p>
+            </div>
+        </section>
+    </main>
 
-        </div>
-
-        <div class="card">
-
-            <div class="icon">📋</div>
-
-            <h3>Copy Result</h3>
-
-            <p>
-                Copy the converted value directly to your clipboard.
-            </p>
-
-        </div>
-
-    </section>
-
-    <section class="converter">
-
-        <h2>Number System Converter</h2>
-
-        <label for="numberInput">Value</label>
-
-        <input
-            type="text"
-            id="numberInput"
-            placeholder="Enter Value"
-            onkeydown="handleEnter(event)"
-            oninput="resetResult()"
-        >
-
-        <label for="fromBase">Convert From</label>
-
-        <select id="fromBase">
-
-            <option value="10">Decimal</option>
-            <option value="2">Binary</option>
-            <option value="8">Octal</option>
-            <option value="16">Hexadecimal</option>
-
-        </select>
-
-        <label for="toBase">Convert To</label>
-
-        <select id="toBase">
-
-            <option value="2">Binary</option>
-            <option value="10">Decimal</option>
-            <option value="8">Octal</option>
-            <option value="16">Hexadecimal</option>
-
-        </select>
-
-        <div class="button-group">
-
-            <button
-                class="swap-btn"
-                onclick="swapBases()">
-                ⇄ Swap
-            </button>
-
-            <button
-                class="convert-btn"
-                onclick="convertNumber()">
-                Convert
-            </button>
-
-            <button
-                class="clear-btn"
-                onclick="resetConverter()">
-                🗑 Clear
-            </button>
-
-        </div>
-
-        <div class="result-box">
-
-            <h3 id="result">
-                Result will appear here
-            </h3>
-
-            <button
-                class="copy-btn"
-                onclick="copyResult()">
-                📋 Copy
-            </button>
-
-        </div>
-
-    </section>
+    <footer>
+        <p>© 2026 Ashish Naik · Number Tools</p>
+    </footer>
 
     <script src="script.js"></script>
-
 </body>
-
 </html>
