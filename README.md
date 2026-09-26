@@ -1,51 +1,87 @@
-# 🔢 Number System Converter
+# 🧮 Number Tools
 
-**Developer:** Ashish Naik
-**Version:** v1.0.0 (Final Release)
+A clean, responsive web toolkit that combines a **Number System Converter** and a **Calculator** in one simple interface.
+
+**Developer:** Ashish Naik  
+**Version:** v2.0.0  
 **Deployment:** GitHub Pages
 
 ---
 
 ## 🌐 Live Demo
 
-👉 [https://ashishnaikbackup.github.io/number-system-converter/](https://ashishnaikbackup.github.io/number-system-converter/)
-
-Convert numbers between Decimal, Binary, Octal and Hexadecimal instantly using the web interface.
-
----
-
-## 🚀 How It Works
-
-1. Enter a value in the **Value** field.
-2. Select the base you're converting **from**.
-3. Select the base you're converting **to**.
-4. Click **Convert** to see the result instantly.
-
-**Example**
-
-Input:
-```
-Value: 255
-Convert From: Decimal
-Convert To: Hexadecimal
-```
-
-Output:
-```
-Result : FF
-```
+👉 https://ashishnaikbackup.github.io/number-system-converter/
 
 ---
 
 ## ✨ Features
 
-- ✅ Binary ↔ Decimal
-- ✅ Binary ↔ Octal
-- ✅ Binary ↔ Hexadecimal
-- ✅ Swap conversion bases instantly
-- ✅ Copy converted result to clipboard
-- ✅ Input validation with error handling
-- ✅ Fully responsive UI (mobile + desktop)
+### 🔢 Number System Converter
+- Decimal ↔ Binary
+- Decimal ↔ Octal
+- Decimal ↔ Hexadecimal
+- Binary ↔ Octal
+- Binary ↔ Hexadecimal
+- Octal ↔ Hexadecimal
+- Swap source and target bases
+- Input validation
+- Copy converted result
+- Enter key support
+
+### 🧮 Calculator
+- Addition
+- Subtraction
+- Multiplication
+- Division
+- Percentage
+- Decimal values
+- Backspace
+- Clear
+- Keyboard support
+- Divide-by-zero protection
+- Copy result
+
+### 📱 Interface
+- Responsive on desktop, tablet and mobile
+- Clean minimal UI
+- Smooth section navigation
+- No framework or build step
+- Pure HTML, CSS and JavaScript
+
+---
+
+## 🚀 How to Use
+
+### Converter
+1. Enter a whole number.
+2. Select the number system to convert from.
+3. Select the target number system.
+4. Press **Convert**.
+5. Use **Copy** to copy the result.
+
+Example:
+
+```
+Value: 255
+From: Decimal
+To: Hexadecimal
+
+Result: FF
+```
+
+### Calculator
+Use the on-screen keys or your keyboard.
+
+Keyboard shortcuts include:
+
+```
+0–9     Numbers
+.       Decimal point
++ - * / Operators
+Enter   Calculate
+Backspace   Delete
+Escape      Clear
+```
 
 ---
 
@@ -53,7 +89,9 @@ Result : FF
 
 - HTML5
 - CSS3
-- JavaScript
+- Vanilla JavaScript (ES6+)
+
+No external libraries or frameworks are required.
 
 ---
 
@@ -79,6 +117,4 @@ MIT License
 
 **Ashish Naik**
 
-GitHub: [https://github.com/ashishnaikbackup](https://github.com/ashishnaikbackup)
-
-Live Demo: [https://ashishnaikbackup.github.io/number-system-converter/](https://ashishnaikbackup.github.io/number-system-converter/)
+GitHub: https://github.com/ashishnaikbackup
