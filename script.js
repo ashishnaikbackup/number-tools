@@ -25,15 +25,31 @@ function isValidForBase(value, base) {
     const patterns = {
         2: /^[01]+$/,
         8: /^[0-7]+$/,
-        10: /^\\d+$/,
+        10: /^\d+$/,
         16: /^[0-9a-f]+$/i
     };
     return patterns[base].test(value);
 }
 
+function convertToDecimal(value, base) {
+    let result = 0n;
+    const digits = value.toUpperCase();
+    const symbols = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    for (const char of digits) {
+        const digit = BigInt(symbols.indexOf(char));
+        if (digit < 0n || digit >= BigInt(base)) {
+            throw new Error("Invalid digit");
+        }
+        result = result * BigInt(base) + digit;
+    }
+
+    return result;
+}
+
 function convertNumber() {
-    const rawInput = document.getElementById("numberInput").value.trim();
-    const input = rawInput.replace(/^0+(?=\\d)/, "") || "0";
+    const rawInput = document.getElementById("numberInput").value.trim().toUpperCase();
+    const input = rawInput.replace(/^0+(?=\d)/, "") || "0";
     const fromBase = Number(document.getElementById("fromBase").value);
     const toBase = Number(document.getElementById("toBase").value);
 
@@ -51,13 +67,17 @@ function convertNumber() {
         lastConversion = "";
         document.getElementById("result").textContent = "Invalid input";
         document.getElementById("copyConverterBtn").hidden = true;
-        setStatus("converterStatus", baseNames[fromBase] + " contains an invalid digit for base " + fromBase + ".");
+        setStatus(
+            "converterStatus",
+            baseNames[fromBase] + " contains an invalid digit for base " + fromBase + "."
+        );
         return;
     }
 
     try {
-        let decimal = BigInt(parseInt(input, fromBase));
+        const decimal = convertToDecimal(input, fromBase);
         lastConversion = decimal.toString(toBase).toUpperCase();
+
         document.getElementById("result").textContent = lastConversion;
         document.getElementById("copyConverterBtn").hidden = false;
     } catch {
@@ -82,10 +102,13 @@ function swapBases() {
 
 async function copyText(text, button, defaultLabel, statusId) {
     if (!text) return;
+
     try {
         await navigator.clipboard.writeText(text);
         button.textContent = "✓ Copied";
-        setTimeout(() => { button.textContent = defaultLabel; }, 1600);
+        setTimeout(() => {
+            button.textContent = defaultLabel;
+        }, 1600);
     } catch {
         setStatus(statusId, "Clipboard access is unavailable. Copy the result manually.");
     }
@@ -107,9 +130,14 @@ function resetConverter() {
 
 function formatCalculatorNumber(value) {
     if (value === "Error") return value;
+
     const numeric = Number(value);
+
     if (!Number.isFinite(numeric)) return "Error";
-    return Number.isInteger(numeric) ? numeric.toString() : Number(numeric.toPrecision(12)).toString();
+
+    return Number.isInteger(numeric)
+        ? numeric.toString()
+        : Number(numeric.toPrecision(12)).toString();
 }
 
 function updateCalculatorDisplay() {
@@ -125,6 +153,7 @@ function clearCalculator() {
         waitingForOperand: false,
         expression: ""
     };
+
     setStatus("calculatorStatus");
     updateCalculatorDisplay();
 }
@@ -134,8 +163,11 @@ function inputCalculatorNumber(number) {
         calculator.current = number;
         calculator.waitingForOperand = false;
     } else {
-        calculator.current = calculator.current === "0" ? number : calculator.current + number;
+        calculator.current = calculator.current === "0"
+            ? number
+            : calculator.current + number;
     }
+
     updateCalculatorDisplay();
 }
 
@@ -146,20 +178,31 @@ function inputDecimal() {
     } else if (!calculator.current.includes(".")) {
         calculator.current += ".";
     }
+
     updateCalculatorDisplay();
 }
 
 function backspaceCalculator() {
     if (calculator.waitingForOperand || calculator.current === "Error") return;
-    calculator.current = calculator.current.length > 1 ? calculator.current.slice(0, -1) : "0";
-    if (calculator.current === "-" || calculator.current === "") calculator.current = "0";
+
+    calculator.current = calculator.current.length > 1
+        ? calculator.current.slice(0, -1)
+        : "0";
+
+    if (calculator.current === "-" || calculator.current === "") {
+        calculator.current = "0";
+    }
+
     updateCalculatorDisplay();
 }
 
 function percentCalculator() {
     if (calculator.current === "Error") return;
+
     const value = Number(calculator.current);
+
     if (!Number.isFinite(value)) return;
+
     calculator.current = formatCalculatorNumber(value / 100);
     updateCalculatorDisplay();
 }
@@ -176,6 +219,7 @@ function calculate(a, b, operator) {
 
 function chooseOperator(operator) {
     const inputValue = Number(calculator.current);
+
     if (!Number.isFinite(inputValue)) {
         clearCalculator();
         return;
@@ -183,6 +227,7 @@ function chooseOperator(operator) {
 
     if (calculator.previous !== null && calculator.operator && !calculator.waitingForOperand) {
         const result = calculate(calculator.previous, inputValue, calculator.operator);
+
         if (result === null || !Number.isFinite(result)) {
             calculator.current = "Error";
             calculator.expression = "Cannot divide by zero";
@@ -192,6 +237,7 @@ function chooseOperator(operator) {
             updateCalculatorDisplay();
             return;
         }
+
         calculator.current = formatCalculatorNumber(result);
         calculator.previous = result;
     } else {
@@ -226,19 +272,30 @@ function equalsCalculator() {
 
 function handleCalculatorAction(action) {
     switch (action) {
-        case "clear": clearCalculator(); break;
-        case "backspace": backspaceCalculator(); break;
-        case "percent": percentCalculator(); break;
-        case "decimal": inputDecimal(); break;
-        case "equals": equalsCalculator(); break;
+        case "clear":
+            clearCalculator();
+            break;
+        case "backspace":
+            backspaceCalculator();
+            break;
+        case "percent":
+            percentCalculator();
+            break;
+        case "decimal":
+            inputDecimal();
+            break;
+        case "equals":
+            equalsCalculator();
+            break;
     }
 }
 
 function handleCalculatorKeyboard(event) {
-    if (document.activeElement === document.getElementById("numberInput")) return;
+    if (event.target.matches("input, select, textarea, button, a")) return;
 
     const key = event.key;
-    if (/^\\d$/.test(key)) {
+
+    if (/^\d$/.test(key)) {
         event.preventDefault();
         inputCalculatorNumber(key);
     } else if (key === ".") {
